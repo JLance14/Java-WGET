@@ -105,11 +105,7 @@ public class Wget {
 			// comprimir en gzip
 		}
 		else if (isAscii) {
-			
-			FilterInputStream htmlFilter = null;
-			
-			//htmlFilter = new BufferedInputStream(lectura);
-			
+						
 			System.out.println("Ascii");
 			// restringuir en ascii
 		}
@@ -123,7 +119,7 @@ public class Wget {
 				
 				//System.out.println("Line : "+in.readLine());
 				
-				Descarrega hilos = new Descarrega(in.readLine()) ;
+				Descarrega hilos = new Descarrega(in.readLine(), isAscii) ;
 				hilos.run();
 				}
 			in.close();
