@@ -8,11 +8,14 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+
 public class Descarrega extends Thread {
 	private URL html ;
+	boolean isAscii;
 	
-	public Descarrega(String link) throws IOException  {
+	public Descarrega(String link, boolean ascii) throws IOException  {
 		html = new URL(link);
+		isAscii = ascii;
 	}
 	
 	public void run() {
@@ -24,6 +27,7 @@ public class Descarrega extends Thread {
   		String p1 = null;
   		String p2 = null;
   		int count = 1;
+  		
   		
 			try {
 				conexio = html.openConnection();
@@ -73,15 +77,19 @@ public class Descarrega extends Thread {
 			}
 			
 			
-			FilterInputStream htmlFilter = null;
-			htmlFilter = new BufferedInputStream(lectura);
+			
 					
 			try {
 
 				while((lectura.available()) > 0) {
 					
+					if(isAscii) {
+						Html2AsciiInputStream htmlFilter = new Html2AsciiInputStream(lectura);
+						htmlFilter.read();
+					}
+					
+		
 					foutput.write(lectura.read());
-
 				}
 			
 				
@@ -91,8 +99,6 @@ public class Descarrega extends Thread {
 				e.printStackTrace();
 			}
 			try {
-				
-				htmlFilter.close();
 				foutput.close();
 				
 			} catch (IOException e) {
