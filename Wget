@@ -1,0 +1,132 @@
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FilterInputStream;
+import java.io.IOException;
+
+public class Wget {
+	
+	/*
+	public static void main(String[] args) {
+	
+		
+		try {
+			
+			BufferedReader in = new BufferedReader(new FileReader("url.txt"));
+		
+			while(in.ready()) {
+				
+				//System.out.println("Line : "+in.readLine());
+				descarrega(in.readLine()) ;
+				}
+			in.close();
+			}
+			
+		 catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block 
+			// Archivo no encontrado
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}*/
+
+	
+	
+	public static void main(String[] args) throws IOException {
+	
+		boolean isAscii = false;
+		boolean isFile = false;
+		boolean isZip = false;
+		boolean isGZip = false;
+		String archivoLinks = new String("url.txt");
+		File archivoExisteix = null;
+		
+		for (String word:args)
+		{
+			if(isFile)
+			{
+				// comando de -f comando
+				archivoLinks = word;
+				archivoExisteix = new File(archivoLinks);
+				if(!archivoExisteix.exists()) {
+					archivoLinks = "url.txt";
+					System.out.println(" archiu proporcionat com a parametre no existeix !" );
+				}
+				
+				isFile = false;
+			}
+			else {
+				if(word.equals("-f") ) {
+					System.out.println("Parametre: -f" );
+					//parametro -f
+					isFile = true;
+				}
+				if(word.equals("-a")) {
+					System.out.println(" -a" );
+					// HTML2AsciiInputStream
+					isAscii = true;
+				}
+			
+				if(word.equals("-z")) {
+					System.out.println(" -z" );
+					//Comprir fichero en Zip
+					isZip = true;
+				}
+			
+				if(word.equals("-gz")) {
+					System.out.println(" -gz" );
+					//Comprir fichero en gZip
+					isGZip = true;
+				}
+			}
+			
+			
+		}	//fin del for
+		
+		if ((isAscii) && (isZip) && (isGZip)) {
+			System.out.println("Gzip , Zip i ascii");
+			// comprimir en gzip , en zip y restringuir ascii
+		}
+		
+		else if ((isZip) && (isGZip)) {
+			System.out.println("Gzip`i zip");
+			// comprimir en gzip y en Zip
+		}
+		
+		else if (isZip) {
+			System.out.println("zip");
+			// comprimir en Zip
+		}
+		else if (isGZip) {
+			System.out.println("Gzip");
+			// comprimir en gzip
+		}
+		else if (isAscii) {
+			
+			FilterInputStream htmlFilter = null;
+			
+			//htmlFilter = new BufferedInputStream(lectura);
+			
+			System.out.println("Ascii");
+			// restringuir en ascii
+		}
+		else {
+			//ningun parametro
+		}
+		
+		BufferedReader in = new BufferedReader(new FileReader(archivoLinks));
+		
+			while(in.ready()) {
+				
+				//System.out.println("Line : "+in.readLine());
+				
+				Descarrega hilos = new Descarrega(in.readLine()) ;
+				hilos.run();
+				}
+			in.close();
+	
+	}
+}
