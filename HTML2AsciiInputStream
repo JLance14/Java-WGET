@@ -1,0 +1,35 @@
+import java.io.FilterInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+public class Html2AsciiInputStream extends FilterInputStream {
+	protected Html2AsciiInputStream(InputStream in) {
+		super(in);
+	}
+	
+	int i = 0;
+	char c;
+	
+	public int read() throws IOException {
+		
+		/*
+		while((i = in.read()) != -1) {
+		
+		c = (char)i;
+		
+		if (c=='>') {
+			c = 'n';
+		}
+		
+		System.out.println(c);
+		
+		
+		}
+		*/
+		
+		return in.read();
+		
+	
+		
+	}
+}
