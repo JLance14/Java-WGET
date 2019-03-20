@@ -12,24 +12,12 @@ public class Html2AsciiInputStream extends FilterInputStream {
 	
 	public int read() throws IOException {
 		
-		/*
-		while((i = in.read()) != -1) {
-		
-		c = (char)i;
-		
-		if (c=='>') {
-			c = 'n';
+		while ((i = in.read()) != -1) {
+			c = (char)i;
 		}
 		
-		System.out.println(c);
-		
-		
-		}
-		*/
 		
 		return in.read();
-		
 	
-		
 	}
 }
